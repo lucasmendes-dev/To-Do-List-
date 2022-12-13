@@ -5,24 +5,34 @@ from .models import Task
 from .forms import TaskForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+import datetime
 
 
 @login_required
 def taskList(request):
 
     search = request.GET.get('search')
+    filter = request.GET.get('filter')
+    #para dashboard, filtro de 30 dias
+    tasksDoneRecently = Task.objects.filter(done='done', updated_at__gt=datetime.datetime.now() - datetime.timedelta(days=30), user=request.user).count()
+    taskDone = Task.objects.filter(done='done', user=request.user).count()
+    taskDoing = Task.objects.filter(done='doing', user=request.user).count()
+    
     
     if search:
-        tasks = Task.objects.filter(title__icontains=search)    #filtro busca
+        tasks = Task.objects.filter(title__icontains=search, user=request.user)    #filtro busca
+    elif filter:
+        tasks = Task.objects.filter(done=filter, user=request.user)    #filtro de status tarefa
     else:            
-        tasks_list = Task.objects.all().order_by('-created_at')  
+        tasks_list = Task.objects.all().order_by('-created_at').filter(user=request.user)  #pegar somente dados de usuário logado
             
-        paginator = Paginator(tasks_list, 3)
+        paginator = Paginator(tasks_list, 10)
         
         page = request.GET.get('page')
         tasks = paginator.get_page(page)
         
-    return render(request, 'tasks/list.html', {'tasks': tasks})
+    return render(request, 'tasks/list.html', {'tasks': tasks, 'tasksrecently': tasksDoneRecently, 'taskDone': taskDone, 'taskDoing': taskDoing})
+
 
 @login_required
 def taskView(request, id):
@@ -38,6 +48,7 @@ def newTask(request):
         if form.is_valid():
             task = form.save(commit=False)
             task.done = 'doing'
+            task.user = request.user
             task.save()
             
             messages.info(request, 'Tarefa criada com sucesso.')
@@ -75,6 +86,18 @@ def deleteTask(request, id):
     return redirect('/')
 
 
+@login_required
+def changeStatus(request, id):
+    task = get_object_or_404(Task, pk=id)
+    
+    if task.done == 'doing':
+        task.done = 'done'
+    else:
+        task.done = 'doing'
+        
+    task.save()
+    return redirect('/')
+    
 
 
 def yourName(request, name):

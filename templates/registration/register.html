@@ -15,9 +15,9 @@
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ next }}">
                     {{ form | crispy }}
-                    <button type="submit" class="btn btn-primary btn-block">Registrar</button>
-                    
+                    <button type="submit" class="btn btn-primary btn-block">Registrar</button>                    
                 </form>
+               <p class="change-form-p">Já possuo uma conta.<a href="/accounts/login"> Fazer Login</a> </p>
             </div>
         </div>
     </div>

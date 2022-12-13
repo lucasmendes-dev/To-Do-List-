@@ -26,6 +26,53 @@
     letter-spacing: 1px;
 }
 
+/* dashboard */
+
+.dashboard {
+    padding: 0;
+    width: 100%;
+    display: block;
+    margin-bottom: 30px;
+}
+
+.dashboard h4 {
+    font-size: 20px;
+}
+
+.dashboard span {
+    font-size: 40px;
+    display: block;
+    width: 100%;    
+}
+
+.dashboard-box {
+    float: left;
+    background-color: #DFDFDF;
+    color: #FFF;
+    padding: 20px;
+    box-sizing: border-box;
+    height: 130px;
+    width: 32%;
+    text-align: center;
+}
+
+.dashboard-box:nth-child(2) {
+   margin-left: 7%;
+   margin-right: 7%; 
+}
+
+#dashboard-lastdays {
+    background-color: #3476e2;
+}
+
+#dashboard-done {
+    background-color: #13c43f;
+}
+
+#dashboard-doing {
+    background-color: #db1e47;
+}
+
 /* Botão de Adicionar*/
 
 .add-div {
@@ -64,6 +111,19 @@
     display: inline-block;
 }
 
+/* Filter */ 
+
+.filter-div {
+    margin-bottom: 15px;
+    padding: 0;
+}
+
+#filter {
+    display: inline-block;
+    width: 200px;
+    margin-left: 10px;
+}
+
 /* Lista de Tarefas */
 
 .list-div {
@@ -78,11 +138,16 @@
     list-style: none;
     font-size: 20px;
     height: 50px;
+    padding: 0 15px;
     padding-top: 10px;
     border-bottom: 1px dashed #ccc;
 }
 
-.fas.fa-trash, .fas.fa-edit {
+.task-item.done {
+    background-color: #ccc;
+}
+
+.fas.fa-trash, .fas.fa-edit, .fas.fa-check {
     cursor: pointer;
     margin: 5px;
     font-size: 20px;
@@ -95,6 +160,13 @@
 
 .fas.fa-edit {
     color: #13c43f;
+}
+
+.fas.fa-check {
+    color: #CCC;
+}
+.done .fas.fa-check {
+    color: #3476e2;
 }
 
 
@@ -149,4 +221,13 @@ ul.messages li {
 
 .btn-block {
     width: 100%;
+}
+
+.change-form-p {
+    margin-top: 30px;
+    text-align: center;    
+}
+
+.change-form-p a {
+    text-decoration: none;
 }
